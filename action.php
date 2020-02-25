@@ -10,6 +10,8 @@ if (isset($_POST["first_name"])&&isset($_POST["last_name"])){
         echo '<p>Data Inserted</p>';
     }
 
+}else{
+    echo "data could not be inserted";
 }
 
 ?>
