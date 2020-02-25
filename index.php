@@ -45,7 +45,7 @@
         <div class="form-group">
             <input type="hidden" name="action" id="action" value="insert">
             <input type="hidden" name="hidden_id" id="hidden_id">
-            <input type="submit" name="form_action" id="form_action" class="btn btn-info" value="Insert">
+            <input type="button" name="form_action" id="form_action" class="btn btn-info" value="Insert">
         </div>
 
     </form>
@@ -55,10 +55,6 @@
 <div id="action alert" title="alert">
 </div>
 
-
-<!--<script src="https://code.jquery.com/jquery-3.4.1.js"-->
-<!--        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="-->
-<!--        crossorigin="anonymous"></script>-->
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>
@@ -96,60 +92,38 @@
             $('#user_dialog').dialog('open');
         });
 
-        // $('#user_form').on('submit', function (event) {
-        //     event.preventDefault();
-        //     var error_first_name = '';
-        //     var error_last_name = '';
-        // if ($('#first_name').val() == '') {
-        //
-        //     error_first_name = 'first name required';
-        //     $('#error_first_name').text(error_first_name);
-        //     $('#first_name').css('border-color', 'red');
-        // } else {
-        //     error_first_name = '';
-        //     $('#error_first_name').text(error_first_name);
-        //     $('#first_name').css('border-color', '');
-        //
-        // }
-        // if ($('#last_name').val() == '') {
-        //
-        //     error_last_name = 'last_name_required';
-        //     $('#error_last_name').text(error_last_name);
-        //     $('#last_name').css('border-color', 'red');
-        //
-        // } else {
-        //
-        //     error_last_name = '';
-        //     $('#error_last_name').text(error_last_name);
-        //     $('#last_name').css('border_color', '');
-        // }
-
-        // if (error_first_name == '' || error_last_name == '') {
-        //
-        //     return false;
-        // } else {
-        //     $('#form_action').attr('disabled', 'disabled');
-        // var form_data = $(this).serialize();form_action
         $(document).ready(function () {
             $('#form_action').click(function () {
+                var error_first_name = '';
+                var error_last_name = '';
                 var first_name = $("#first_name").val();
                 var last_name = $('#last_name').val();
-                console.log(first_name);
-                $.ajax({
-                    url: "action.php",
-                    method: "POST",
-                    data: {
-                        first_name: first_name,
-                        last_name: last_name
-                    },
-                    success: function (data) {
-                        $('#user_dialog').dialog('close');
-                        console.log(data);
-                        $('#action_alert').html(data);
-                        $('#action_alert').dialog('open');
-                        load_data();
-                    }
-                });
+                if (first_name == '') {
+                    error_first_name = 'first name required';
+                    $('#error_first_name').text(error_first_name);
+                    $('#first_name').css('border-color', 'red');
+                } else if (last_name == '') {
+                    error_last_name = 'last_name_required';
+                    $('#error_last_name').text(error_last_name);
+                    $('#last_name').css('border-color', 'red');
+                } else {
+                    console.log(first_name);
+                    $.ajax({
+                        url: "action.php",
+                        method: "POST",
+                        data: {
+                            first_name: first_name,
+                            last_name: last_name
+                        },
+                        success: function (data) {
+                            $('#user_dialog').dialog('close');
+                            console.log(data);
+                            $('#action_alert').html(data);
+                            $('#action_alert').dialog('open');
+                            load_data();
+                        }
+                    });
+                }
             });
         });
 
