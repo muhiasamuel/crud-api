@@ -13,7 +13,7 @@
 
     <!--<script src="jquery.min.js"></script>
     <script src="jquery-3"></script>-->
-<!--    <script src="bootstrap/js/bootstrap.min.js"></script>-->
+    <!--    <script src="bootstrap/js/bootstrap.min.js"></script>-->
 </head>
 <body>
 <h2 text align="center">CRUD API</h2>
@@ -95,54 +95,64 @@
             $('#form_action').val("Insert");
             $('#user_dialog').dialog('open');
         });
-        $('#user_form').on('submit', function (event) {
-            event.preventDefault();
-            var error_first_name = '';
-            var error_last_name = '';
-            if ($('#first_name').val() == '') {
 
-                error_first_name = 'first name required';
-                $('#error_first_name').text(error_first_name);
-                $('#first_name').css('border-color', 'red');
-            } else {
-                error_first_name = '';
-                $('#error_first_name').text(error_first_name);
-                $('#first_name').css('border-color', '');
+        // $('#user_form').on('submit', function (event) {
+        //     event.preventDefault();
+        //     var error_first_name = '';
+        //     var error_last_name = '';
+        // if ($('#first_name').val() == '') {
+        //
+        //     error_first_name = 'first name required';
+        //     $('#error_first_name').text(error_first_name);
+        //     $('#first_name').css('border-color', 'red');
+        // } else {
+        //     error_first_name = '';
+        //     $('#error_first_name').text(error_first_name);
+        //     $('#first_name').css('border-color', '');
+        //
+        // }
+        // if ($('#last_name').val() == '') {
+        //
+        //     error_last_name = 'last_name_required';
+        //     $('#error_last_name').text(error_last_name);
+        //     $('#last_name').css('border-color', 'red');
+        //
+        // } else {
+        //
+        //     error_last_name = '';
+        //     $('#error_last_name').text(error_last_name);
+        //     $('#last_name').css('border_color', '');
+        // }
 
-            }
-            if ($('#last_name').val() == '') {
-
-                error_last_name = 'last_name_required';
-                $('#error_last_name').text(error_last_name);
-                $('#last_name').css('border-color', 'red');
-
-            } else {
-
-                error_last_name = '';
-                $('#error_last_name').text(error_last_name);
-                $('#last_name').css('border_color', '');
-            }
-
-            if (error_first_name == '' || error_last_name == '') {
-
-                return false;
-            } else {
-                $('#form_action').attr('disabled', 'disabled');
-                var form_data = $(this).serialize();
+        // if (error_first_name == '' || error_last_name == '') {
+        //
+        //     return false;
+        // } else {
+        //     $('#form_action').attr('disabled', 'disabled');
+        // var form_data = $(this).serialize();form_action
+        $(document).ready(function () {
+            $('#form_action').click(function () {
                 var first_name = $("#first_name").val();
+                var last_name = $('#last_name').val();
+                console.log(first_name);
                 $.ajax({
                     url: "action.php",
                     method: "POST",
-                    data: form_data,
+                    data: {
+                        first_name: first_name,
+                        last_name: last_name
+                    },
                     success: function (data) {
                         $('#user_dialog').dialog('close');
+                        console.log(data);
                         $('#action_alert').html(data);
                         $('#action_alert').dialog('open');
                         load_data();
                     }
                 });
-            }
+            });
         });
+
         $('#action_alert').dialog({
             autoOpen: false
         });
