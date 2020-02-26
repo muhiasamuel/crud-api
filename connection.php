@@ -1,6 +1,7 @@
 <?php
-
-$connect = new PDO("mysql:host =localhost; dbname = crud", "root","")
-or die("could not connect");
+$connect=mysqli_connect("localhost","root","","test");
+if (!$connect){
+    echo 'Connection error';
+}
 
   ?>
